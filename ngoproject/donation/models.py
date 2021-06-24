@@ -11,6 +11,7 @@ from django.urls import reverse, reverse_lazy
 
 class User(models.Model):
     ROLE_OPTS = [('ADMIN', 'Admin'), ('USER', 'User')]
+    id = models.BigAutoField(primary_key=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     
     first_name = models.CharField(default = '', max_length=200)
@@ -32,10 +33,10 @@ class Donation(models.Model):
     last_name = models.CharField(default='', max_length=25)
     
     cell_num = models.CharField(default='', max_length=14, blank=True)
-    phone_num = models.CharField(default='', max_length=14, blank=True) 
-    usr_email = models.EmailField(default= '', max_length=200)
+    phone_num = models.CharField('phone #', default='', max_length=14, blank=True) 
+    usr_email = models.EmailField('email address', default= '', max_length=200)
 
-    usr_addr1 = models.CharField(max_length=50)
+    usr_addr1 = models.CharField('address 1', max_length=50)
     usr_addr2 = models.CharField(max_length=50, blank=True)
     usr_city = models.CharField(default = '', max_length=50, blank=True)
     usr_state = models.CharField(default = '', max_length=50)

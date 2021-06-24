@@ -5,5 +5,6 @@ app_name = 'donation'
 
 urlpatterns = [
     path('', views.UserList.as_view(), name='user_list'),
-    path('add', views.UserCreate.as_view(), name='user_create')
+    path('add', views.UserCreate.as_view(), name='user_create'),
+    path('delete/<slug:pk>', views.UserDelete.as_view(), name='user_delete')
 ]

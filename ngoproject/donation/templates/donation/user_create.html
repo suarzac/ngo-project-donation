@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1> Add New User </h1>
-    <form action="{% url 'donation:user_creat' %}" method="post">{% csrf_token %}
+    <form method="post">{% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Save">
     </form>

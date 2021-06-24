@@ -1,30 +1,44 @@
 {% extends '../base.html' %}
 
-{% block title%} User List {% endblock title%}
+{% block title%} User Management {% endblock title%}
 
 {% block content %}
-    <table>
-        <tr>
-            <th>First name</th>
-            <th>Last name</th> 
-            <th>Email</th>
-            <th>Role</th>
-        </tr>
-        {% if user_list %}
-            {% for user in user_list %}
+    <div class='container'>
+        <h1>User Management </h1>
+    </div>
+    <div class="container-fluid pull-right">
+            <a class="btn btn-primary" role="button" href="{% url 'donation:user_create' %}">
+                <i class="fas fa-user-plus"></i>
+                <span>Add User</span>
+            </a>
+    </div>
+    <div class='container'>
+        <table class='table table-striped'>
+            <thead class='thead-dark'>
                 <tr>
-                    <td> {{ user.first_name }} </td>
-                    <td> {{ user.last_name }} </td>
-                    <td><a href="{% url 'donation:user_list' %}"> {{ user.usr_email }} </a></td>
-                    <td> {{ user.role_opt}} </td>
-                    <td><a href="{% url 'donation:user_list' %}"> edit </a></td> 
-                    <td><a href="{% url 'donation:user_list' %}"> delete </a></td> 
+                    <th>First name</th>
+                    <th>Last name</th> 
+                    <th>Email</th>
+                    <th>Role</th>
                 </tr>
-            {% endfor %}
-        {% else %}
-            <p> No products available.</p>
-        {% endif %}
-    </table>
-
+            </thead>
+            <tbody>
+            {% if user_list %}
+                {% for user in user_list %}
+                    <tr>
+                        <td> {{ user.first_name }} </td>
+                        <td> {{ user.last_name }} </td>
+                        <td> {{ user.usr_email }} </td>
+                        <td> {{ user.role_opt}} </td>
+                        <td><a href="{% url 'donation:user_list' %}"> edit </a></td> 
+                        <td><a href="{% url 'donation:user_delete' pk=user.id %}"> delete </a></td> 
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <p> No products available.</p>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
     
 {% endblock content %}
