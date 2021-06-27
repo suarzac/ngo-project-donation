@@ -9,7 +9,7 @@
     top: 0;
     left: 0;
     height: 100vh;
-    z-index: 999;
+    z-index: 0;
     background: #7386D5;
     color: #fff;
     transition: all 0.3s;

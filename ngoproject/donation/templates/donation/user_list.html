@@ -3,23 +3,24 @@
 {% block title%} User Management {% endblock title%}
 
 {% block content %}
+    <h1>User Management</h1>
+    
     <div class='container'>
-        <h1>User Management </h1>
-    </div>
-    <div class="container-fluid pull-right">
+        <div class="float-end">
             <a class="btn btn-primary" role="button" href="{% url 'donation:user_create' %}">
                 <i class="fas fa-user-plus"></i>
                 <span>Add User</span>
             </a>
-    </div>
-    <div class='container'>
+        </div>
         <table class='table table-striped'>
-            <thead class='thead-dark'>
+            <thead class='table-dark'>
                 <tr>
                     <th>First name</th>
                     <th>Last name</th> 
                     <th>Email</th>
                     <th>Role</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -28,14 +29,14 @@
                     <tr>
                         <td> {{ user.first_name }} </td>
                         <td> {{ user.last_name }} </td>
-                        <td> {{ user.usr_email }} </td>
-                        <td> {{ user.role_opt}} </td>
-                        <td><a href="{% url 'donation:user_list' %}"> edit </a></td> 
+                        <td> {{ user.email }} </td>
+                        <td> {% if user.is_admin %}Admin{% else %} User {% endif %} </td>
+                        <td><a href="{% url 'donation:user_update' pk=user.id %}"> edit </a></td> 
                         <td><a href="{% url 'donation:user_delete' pk=user.id %}"> delete </a></td> 
                     </tr>
                 {% endfor %}
             {% else %}
-                <p> No products available.</p>
+                <p> No users available.</p>
             {% endif %}
             </tbody>
         </table>

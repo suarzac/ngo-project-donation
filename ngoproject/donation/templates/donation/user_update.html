@@ -1,0 +1,12 @@
+{% extends '../base.html' %}
+
+{% block title%} Edit User {% endblock title%}
+
+{% block content %}
+    <h1> Edit User </h1>
+    <form method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save">
+        <a href="{% url 'donation:user_list' %}" > Cancel </a>
+    </form>
+{% endblock content %}

@@ -21,41 +21,58 @@
 </head>
 
 <body>
-<div class='container'>
-    <div class="wrapper">
-        <!-- Sidebar -->
-        <nav id="sidebar">
-
-            <div class="sidebar-header">
-                <h3>NGO</h3>
+<div class="container-fluid">
+    <!-- Top Nav -->
+    <div class="row align-items-start bg-dark">
+        <div class="col">
+            <div class="align-items-center">
+                <a href="/manage" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">NGO</span>
+                </a>
             </div>
+        </div>
+        <div class="col">
+            <div class="align-items-center">
+            <!-- link to Logout -->
+                <a href="/manage" class="d-flex align-items-center text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">{{ user.first_name}} {{user.last_name}} ({% if user.is_admin %}Admin{% else %} User {% endif %})</span>
+                </a>
+            </div>s
+        </div>
+        <div class="col">
+            One of three columns
+        </div>
+    </div>
 
-            <ul class="list-group">
-                <li class='list-group-item list-group-item-primary'>
-                    <a href="{% url 'donation:user_list' %}">User Management</a>
-                </li>
-                <li class='list-group-item list-group-item-primary'> 
-                    <a href="#">Donation Management</a>
-                </li>
-                <li class='list-group-item list-group-item-primary'>
-                    <a href="#">User View</a>
-                </li>
-            </ul>
-        </nav>
-    </div>   
+    <div class="row flex-nowrap">
+        <!-- fixed side bar-->
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item">
+                        <a href="{% url 'donation:user_list' %}" class="nav-link align-middle px-0">
+                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">User Management</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Donation Management</span></a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">User View</span> </a>
+                    </li>
+                </ul>
+                <hr>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="col py-3">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
 </div>
-
-    {% block content %} {% endblock %}
-    
-</div>
-
-<div class="footer navbar-fixed-bottom">
-    <footer>
-        <p>&copy; SuarZac 2021</p>
-    </footer>
-</div>
-<!-- /container -->
-
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
