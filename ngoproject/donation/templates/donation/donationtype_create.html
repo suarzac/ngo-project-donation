@@ -1,0 +1,12 @@
+{% extends '../base.html' %}
+
+{% block title%} Add New Donation Type {% endblock title%}
+
+{% block content %}
+    <h1> Add New Donation Type </h1>
+    <form method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save">
+        <a href="{% url 'donation:donation_list' %}" > Cancel </a>
+    </form>
+{% endblock content %}

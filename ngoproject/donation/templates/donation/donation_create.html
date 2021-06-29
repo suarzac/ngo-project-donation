@@ -1,0 +1,13 @@
+{% extends '../base.html' %}
+
+{% block title%} Personal Info {% endblock title%}
+
+{% block content %}
+    <h1> Personal Information </h1>
+    <form method="post" action="{% url 'donation:give_donation' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Continue" class='button'>
+        <a href="{% url 'donation:user_view' %}" role='button' > Cancel </a>
+    </form>
+{% endblock content %}

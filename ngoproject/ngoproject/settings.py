@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
 # Changing built in user model to my custom one
 AUTH_USER_MODEL = 'donation.User'
+# SETTING login url
+LOGIN_URL = 'login'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,0 +1,42 @@
+{% extends '../base.html' %}
+
+{% block title%} Donation Management {% endblock title%}
+
+{% block content %}
+    <h1>Donation Management</h1>
+    <!-- Do we want a button to add donation types? -->
+    <div class='container'>
+        <div class="float-end">
+            <a class="btn btn-primary" role="button" href="{% url 'donation:donationtype_create' %}">
+            <!-- Find FA icon for donation type button -->
+                <i class="fas fa-user-plus"></i>
+                <span>Add Donation Type</span>
+            </a>
+        </div>
+        <table class='table table-striped'>
+            <thead class='table-dark'>
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th> 
+                    <th>Amount</th>
+                    <th>Donation Type</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if donation_list %}
+                {% for donation in donation_list %}
+                    <tr>
+                        <td> {{ donation.first_name }} {{ donation.last_name }} </td>
+                        <td> {{ donation.date_created }} </td>
+                        <td> {{ donation.donation_amount }} </td>
+                        <td> {{ donation.donation_type }} </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <p> No donation information available.</p>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    
+{% endblock content %}

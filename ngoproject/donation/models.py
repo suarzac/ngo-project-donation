@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse, reverse_lazy
 
 
+
 # Create your models here.
 
 class UserManager(BaseUserManager):
@@ -66,7 +67,7 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email' #username
 
     
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'role_opt']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
     
     objects = UserManager()
 
@@ -93,48 +94,40 @@ class User(AbstractBaseUser):
     def is_active(self):
         return self.active
 
-'''
-class MyUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    ROLE_OPTS = [('ADMIN', 'Admin'), ('USER', 'User')]
-    id = models.BigAutoField(primary_key=True)
-    
-    first_name = models.CharField(default = '', max_length=200)
-    last_name = models.CharField(default='', max_length=200)
-
-    password = models.CharField(default = '', max_length=200)
-
-    role_opt = models.CharField('role', max_length=5, choices=ROLE_OPTS, default='User')
-    
-    def __str__(self):
-        return self.first_name
-    def get_absolute_url(self):
-        return reverse("User", kwargs={"pk": self.pk})
-'''
 
 class Donation(models.Model):
+
     first_name = models.CharField(default = '', max_length=25)
     last_name = models.CharField(default='', max_length=25)
     
     cell_num = models.CharField(default='', max_length=14, blank=True)
     phone_num = models.CharField('phone #', default='', max_length=14, blank=True) 
-    usr_email = models.EmailField('email address', default= '', max_length=200)
+    usr_email = models.EmailField('email', default= '', max_length=200)
 
     usr_addr1 = models.CharField('address 1', max_length=50)
     usr_addr2 = models.CharField(max_length=50, blank=True)
     usr_city = models.CharField(default = '', max_length=50, blank=True)
-    usr_state = models.CharField(default = '', max_length=50)
-    usr_zip = models.IntegerField(default='')
-    usr_country = models.CharField(default = '', max_length=50)
+    usr_state = models.CharField(default = '', max_length=50, blank=True, null=True)
+    usr_zip = models.IntegerField(blank=True, null=True)
+    usr_country = models.CharField(default = '', max_length=50,blank=True, null=True)
 
-    urbanization = models.CharField(default = '', max_length=50)
+    urbanization = models.CharField(default = '', max_length=50,blank=True, null=True)
+    
+    donation_amount = models.IntegerField(blank=True, null=True)
+    recurring = models.BooleanField(default=False) 
+    donation_type = models.CharField('type', default='', max_length=255, choices='')
 
-    donation_amount = models.IntegerField(default = '')
+    date_created = models.DateField('Date', auto_now_add=True)
 
     def __str__(self):
         return self.last_name
     def get_absolute_url(self):
-        return reverse("model_detail", kwargs={"pk": self.pk})
-    
+        return reverse("donation:user_view")#, kwargs={"pk": self.pk})
+
+class DonationType(models.Model):
+    donation_type = models.CharField('type', default='', max_length=255) 
+    donation_amount = models.IntegerField(blank=True, null=True)
+    recurring = models.BooleanField(default=False)
+
 class Cart(models.Model):
     pass

@@ -1,0 +1,24 @@
+{% extends '../base.html' %}
+
+{% block title%} Make a Donation {% endblock title%}
+
+{% block content %}
+    <div class="">
+        <h1>Make a Donation</h1>
+    </div>
+
+    <p>Click on any Donation Type to continue</p>
+
+    <div class='d-grid gap-2 d-md-flex justify-content-md-start'>
+    
+        {% if donation_type %}
+            {% for donation in donation_type %}
+                <a href='{% url 'donation:user_donate' %}' class='btn btn-primary me-md-2' role='button'> {{ donation.donation_type }} </a>
+            {% endfor %}
+        {% else %}
+            <p> No donations available.</p>
+        {% endif %}
+        
+    </div>
+    
+{% endblock content %}
