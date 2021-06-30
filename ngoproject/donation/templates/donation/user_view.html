@@ -13,7 +13,9 @@
     
         {% if donation_type %}
             {% for donation in donation_type %}
-                <a href='{% url 'donation:user_donate' %}' class='btn btn-primary me-md-2' role='button'> {{ donation.donation_type }} </a>
+                {% if donation.slug %}
+                    <a href='{% url 'donation:user_donate' donation.slug %}' class='btn btn-primary me-md-2' role='button'> {{ donation.donation_type }} </a>
+                {% endif %}
             {% endfor %}
         {% else %}
             <p> No donations available.</p>

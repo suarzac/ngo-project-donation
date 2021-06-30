@@ -32,20 +32,21 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'donation',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'donation',
 ]
 
 # Changing built in user model to my custom one
 AUTH_USER_MODEL = 'donation.User'
 # SETTING login url
-LOGIN_URL = 'login'
+# OGIN_URL = 'donation:LoginView'
+LOGIN_REDIRECT_URL = '/contribute'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -62,7 +63,7 @@ ROOT_URLCONF = 'ngoproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [str(BASE_DIR.joinpath('templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

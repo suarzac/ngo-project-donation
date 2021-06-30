@@ -2,9 +2,14 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
+from .models import Donation
 
 User = get_user_model()
 
+class UserDonateForm(forms.ModelForm):
+    class Meta:
+        model = Donation
+        exclude = ('id', 'slug')
 
 class UserAdminCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required

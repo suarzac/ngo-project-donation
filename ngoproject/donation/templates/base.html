@@ -23,30 +23,37 @@
 <body>
 <div class="container-fluid">
     <!-- Top Nav -->
-    <div class="row align-items-start bg-dark">
-        <div class="col">
-            <div class="align-items-center">
-                <a href="/manage" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <span class="fs-5 d-none d-sm-inline">NGO</span>
-                </a>
-            </div>
+    <div class="row justify-content-md-start bg-dark bg-gradient">
+        <div class="col col-lg-9">
+            <h3 class="d-flex pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <span class="fs-5 d-none d-sm-inline">NGO</span>
+            </h3>
         </div>
-        <div class="col">
-            <div class="align-items-center">
-            <!-- link to Logout -->
-                <a href="/manage" class="d-flex align-items-center text-white text-decoration-none">
+        <div class="col col-md-auto"> 
+            {% if user.is_active %}
+                <a href="{% url 'logout' %}" class="d-flex align-items-center text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">logout</span>
+                </a>
+            {% else %}
+               <a href="{% url 'login' %}" class="d-flex align-items-center text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">login</span>
+                </a> 
+            {% endif %}
+        </div>
+        <div class="col col-md-auto">
+            {% if user.is_active %} 
+                <a href="{% url 'donation:user_view' %}" class="d-flex align-items-center text-white text-decoration-none">
                     <span class="fs-5 d-none d-sm-inline">{{ user.first_name}} {{user.last_name}} ({% if user.is_admin %}Admin{% else %} User {% endif %})</span>
                 </a>
-            </div>s
-        </div>
-        <div class="col">
-            One of three columns
+            {% else %}
+                <span lass="fs-5 d-none d-sm-inline"></span> 
+            {% endif %}
         </div>
     </div>
 
     <div class="row flex-nowrap">
         <!-- fixed side bar-->
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+        <div class="col col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">

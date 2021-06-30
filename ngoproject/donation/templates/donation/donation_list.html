@@ -25,12 +25,15 @@
             <tbody>
             {% if donation_list %}
                 {% for donation in donation_list %}
-                    <tr>
-                        <td> {{ donation.first_name }} {{ donation.last_name }} </td>
-                        <td> {{ donation.date_created }} </td>
-                        <td> {{ donation.donation_amount }} </td>
-                        <td> {{ donation.donation_type }} </td>
-                    </tr>
+                    {% if donation.donation_amount != None %}
+                        <tr>
+                            <td> {{ donation.first_name }} {{ donation.last_name }} </td>
+                            <td> {{ donation.date_created }} </td>
+                            <td> {{ donation.donation_amount }} </td>
+                            <td> {{ donation.donation_type }} </td>
+                        </tr>
+                    {% else %}
+                    {% endif %}
                 {% endfor %}
             {% else %}
                 <p> No donation information available.</p>

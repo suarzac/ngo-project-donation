@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1> Personal Information </h1>
-    <form method="post" action="{% url 'donation:give_donation' %}">
+    <form method="post" action="{% url 'donation:cart' %}">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Continue" class='button'>

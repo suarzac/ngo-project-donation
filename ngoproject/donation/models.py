@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-
+import uuid
 from distutils.command.upload import upload
 from django.db import models
 from django.contrib.auth.models import User
@@ -54,7 +54,7 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser):
-    ROLE_OPTS = [('ADMIN', 'Admin'), ('USER', 'User')]
+    ROLE_OPTS = [('admin', 'Admin'), ('user', 'User')]
 
     first_name = models.CharField(default='', max_length=255, blank=True, null=True)
     last_name = models.CharField(default='', max_length=255, blank=True, null=True)
@@ -96,33 +96,35 @@ class User(AbstractBaseUser):
 
 
 class Donation(models.Model):
+    id      = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    slug    = models.SlugField(blank=True, unique=True)
 
     first_name = models.CharField(default = '', max_length=25)
     last_name = models.CharField(default='', max_length=25)
     
-    cell_num = models.CharField(default='', max_length=14, blank=True)
+    cell_num = models.CharField('cell #', default='', max_length=14, blank=True)
     phone_num = models.CharField('phone #', default='', max_length=14, blank=True) 
     usr_email = models.EmailField('email', default= '', max_length=200)
 
     usr_addr1 = models.CharField('address 1', max_length=50)
-    usr_addr2 = models.CharField(max_length=50, blank=True)
-    usr_city = models.CharField(default = '', max_length=50, blank=True)
-    usr_state = models.CharField(default = '', max_length=50, blank=True, null=True)
-    usr_zip = models.IntegerField(blank=True, null=True)
-    usr_country = models.CharField(default = '', max_length=50,blank=True, null=True)
+    usr_addr2 = models.CharField('addres 2', max_length=50, blank=True)
+    usr_city = models.CharField('city', default = '', max_length=50, blank=True)
+    usr_state = models.CharField('state', default = '', max_length=50, blank=True, null=True)
+    usr_zip = models.IntegerField('zip', blank=True, null=True)
+    usr_country = models.CharField('country', default = '', max_length=50,blank=True, null=True)
 
     urbanization = models.CharField(default = '', max_length=50,blank=True, null=True)
     
-    donation_amount = models.IntegerField(blank=True, null=True)
+    donation_amount = models.DecimalField(decimal_places=2, max_digits=50, blank=True, null=True)
     recurring = models.BooleanField(default=False) 
-    donation_type = models.CharField('type', default='', max_length=255, choices='')
+    donation_type = models.CharField('type', default='', max_length=255, )
 
     date_created = models.DateField('Date', auto_now_add=True)
 
     def __str__(self):
         return self.last_name
     def get_absolute_url(self):
-        return reverse("donation:user_view")#, kwargs={"pk": self.pk})
+        return reverse("donation:user_view", kwargs={"slug": self.slug})
 
 class DonationType(models.Model):
     donation_type = models.CharField('type', default='', max_length=255) 
@@ -130,4 +132,16 @@ class DonationType(models.Model):
     recurring = models.BooleanField(default=False)
 
 class Cart(models.Model):
-    pass
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    ordered = models.BooleanField(default=False)
+    total_price = models.FloatField(default=0)
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Donation, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    price = models.FloatField(default=0)
+    total_items = models.IntegerField(default=0)
+    quantity = models.IntegerField(default=1)
+

@@ -1,12 +1,12 @@
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
-from .models import DonationType, User, Donation
-from .forms import UserAdminCreationForm
-from django.views.generic import CreateView, DetailView, ListView, DeleteView, UpdateView, FormView
+from .models import *
+from .forms import UserAdminCreationForm, UserDonateForm
+from django.views.generic import CreateView, ListView, DeleteView, UpdateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
-class UserList(ListView):
+class UserList(LoginRequiredMixin,ListView):
     model = User
     template_name = 'donation/user_list.html'
     context_object_name = 'user_list'
@@ -23,13 +23,13 @@ class UserCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
     success_url = '/manage'
 
-class UserDelete(DeleteView):
+class UserDelete(LoginRequiredMixin,DeleteView):
     model = User
     template_name = 'donation/user_delete.html'
     
     success_url = '/manage'
 
-class UserUpdate(UpdateView):
+class UserUpdate(LoginRequiredMixin,UpdateView):
     model = User
     template_name = 'donation/user_update.html'
     fields = ['first_name', 'last_name', 'email', 'role_opt']
@@ -38,37 +38,35 @@ class UserUpdate(UpdateView):
 
 
 
-class DonationList(ListView):
+class DonationList(LoginRequiredMixin, ListView):
     model = Donation
     template_name = 'donation/donation_list.html'
     context_object_name = 'donation_list'
 
-class UserDonate(CreateView):
-    model = Donation
-    template_name ='donation/donation_create.html'
-    fields = '__all__'
-
-
-class DonationCreate(CreateView):
+class DonationCreateType(LoginRequiredMixin, CreateView):
     model = Donation
     template_name = 'donation/donationtype_create.html'
-    fields = ['donation_type']
+    fields = ['donation_type', 'slug']
 
     success_url = '/donations'
 
-class UserView(ListView):
+
+# contribute page
+class UserView(LoginRequiredMixin, ListView):
     model = Donation
     template_name = 'donation/user_view.html'
     context_object_name = 'donation_type'
-
-class GiveDonation(CreateView):
+# user donation form
+class UserDonate(LoginRequiredMixin,CreateView):
     model = Donation
-    template_name = 'donation/give_donation.html'
-    fields = '__all__'
+    template_name ='donation/donation_create.html'
+    form_class = UserDonateForm
 
-   # success_url = '/cart'
 
-class Cart(ListView):
-    model = Donation
+
+
+class Cart(LoginRequiredMixin, ListView):
+    model = Cart
+
     template_name = 'donation/cart.html'
-    context_object_name = 'items'
+    context_object_name = 'cart'
